@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="post_entry">
+  <h2>{{post.title}}</h2><br>
+  <h3>{{post.body}}</h3>
+</div>
+<footer>
+    <h3><a href="{% url 'post_edit' post.pk %}">Postni tahrirlash</a> </h3>
+  <h3><a href="{% url 'post_delete' post.pk %}">Postni o'chirish</a> </h3>
+</footer>
+{% endblock content%}
