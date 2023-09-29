@@ -1,2 +1,2 @@
 # Django-projects
-Bu repositoryda djangoda shu vaqtgacha qilgan barcha loyihalarim bor
+Bu repositoryda Blog va News nomli kichik loyihalarim bor
