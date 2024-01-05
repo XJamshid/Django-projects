@@ -1,0 +1,541 @@
+openapi: 3.0.3
+info:
+  title: TorrentApi
+  version: 0.0.0
+  description: TorrentaAPI Schema
+paths:
+  /api/:
+    get:
+      operationId: api_retrieve
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/categories/:
+    get:
+      operationId: api_categories_list
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCategoryList'
+          description: ''
+    post:
+      operationId: api_categories_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /api/categories/{category}/:
+    get:
+      operationId: api_categories_list_2
+      parameters:
+      - in: path
+        name: category
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: name
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedGameListList'
+          description: ''
+  /api/game_add/:
+    post:
+      operationId: api_game_add_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameAdd'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GameAdd'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GameAdd'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameAdd'
+          description: ''
+  /api/games_list/:
+    get:
+      operationId: api_games_list_list
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedGameListList'
+          description: ''
+  /api/games_list/{name}/:
+    get:
+      operationId: api_games_list_retrieve
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameDetail'
+          description: ''
+  /api/games_list/{name}/delete/:
+    delete:
+      operationId: api_games_list_delete_destroy
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/games_list/{name}/edit/:
+    put:
+      operationId: api_games_list_edit_update
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GameUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GameUpdate'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameUpdate'
+          description: ''
+    patch:
+      operationId: api_games_list_edit_partial_update
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGameUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGameUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGameUpdate'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameUpdate'
+          description: ''
+  /api/screenshot_add/:
+    post:
+      operationId: api_screenshot_add_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScreenshotCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ScreenshotCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ScreenshotCreate'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScreenshotCreate'
+          description: ''
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        games:
+          type: string
+          readOnly: true
+      required:
+      - games
+      - name
+    GameAdd:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        category:
+          type: array
+          items:
+            type: integer
+        release_date:
+          type: string
+          format: date
+        poster:
+          type: string
+          format: uri
+        trailer:
+          type: string
+          format: uri
+          maxLength: 200
+        screenshots:
+          type: array
+          items:
+            type: integer
+        file:
+          type: string
+          format: uri
+      required:
+      - category
+      - file
+      - name
+      - poster
+      - release_date
+      - screenshots
+      - trailer
+    GameDetail:
+      type: object
+      properties:
+        games_list:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        release_date:
+          type: string
+          format: date
+        category:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        poster:
+          type: string
+          format: uri
+        trailer:
+          type: string
+          format: uri
+          maxLength: 200
+        screenshots:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        file:
+          type: string
+          format: uri
+        edit_url:
+          type: string
+          readOnly: true
+        delete_url:
+          type: string
+          readOnly: true
+      required:
+      - category
+      - delete_url
+      - edit_url
+      - file
+      - games_list
+      - name
+      - poster
+      - release_date
+      - screenshots
+      - trailer
+    GameList:
+      type: object
+      properties:
+        detail:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        poster:
+          type: string
+          readOnly: true
+      required:
+      - detail
+      - name
+      - poster
+    GameUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        release_date:
+          type: string
+          format: date
+        category:
+          type: array
+          items:
+            type: integer
+        poster:
+          type: string
+          format: uri
+        trailer:
+          type: string
+          format: uri
+          maxLength: 200
+        screenshots:
+          type: array
+          items:
+            type: integer
+        file:
+          type: string
+          format: uri
+      required:
+      - category
+      - file
+      - name
+      - poster
+      - release_date
+      - screenshots
+      - trailer
+    PaginatedCategoryList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+    PaginatedGameListList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GameList'
+    PatchedGameUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        release_date:
+          type: string
+          format: date
+        category:
+          type: array
+          items:
+            type: integer
+        poster:
+          type: string
+          format: uri
+        trailer:
+          type: string
+          format: uri
+          maxLength: 200
+        screenshots:
+          type: array
+          items:
+            type: integer
+        file:
+          type: string
+          format: uri
+    ScreenshotCreate:
+      type: object
+      properties:
+        game_name:
+          type: string
+          maxLength: 100
+        screenshots:
+          type: string
+          format: uri
+      required:
+      - game_name
+      - screenshots
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

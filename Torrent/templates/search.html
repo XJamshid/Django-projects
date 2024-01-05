@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      {% for game in games %}<!-- games_list har bir sahifa uchun alohid o'yinlar ro'yxati )-->
+  <div class="col">
+    <a class="card" href="{% url 'game' game.pk %}" style="max-width: 150px;">
+      <img src="{{game.poster.url}}" class="card-img-top">
+      <div class="card-body">
+        <h6 class="card-title">{{game.name}}</h6>
+      </div>
+    </a>
+  </div>
+      {% endfor %}
+</div>
+</div>
+
+  {% endblock content %}

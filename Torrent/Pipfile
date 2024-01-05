@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+pillow = "*"
+django-crispy-forms = "*"
+django-embed-video = "*"
+crispy-bootstrap5 = "*"
+djangorestframework = "*"
+drf-spectacular = "*"
+django-filter = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"

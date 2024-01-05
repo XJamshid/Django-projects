@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+<form class="container mb-3 mt-3" method="GET" >
+          <select name="filter" class="form-select form-select-sm"  aria-label="Small select example">
+  <option value="None" selected>Order of games</option>
+  <option value="release_date">By date</option>
+  <option value="num_likes">By popularity</option>
+  <option value="name">Alphabetically</option>
+</select>
+    <br>
+    <button type="submit" class="btn btn-outline-success">Filtering</button>
+</form>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      {% for game in games_list %}<!-- games_list har bir sahifa uchun alohid o'yinlar ro'yxati )-->
+  <div class="col">
+    <a class="card" href="{% url 'game' game.pk %}" style="max-width: 150px;">
+      <img src="{{game.poster.url}}" class="card-img-top">
+      <div class="card-body">
+        <h6 class="card-title">{{game.name}}</h6>
+      </div>
+    </a>
+  </div>
+      {% endfor %}
+</div>
+</div>
+<div class="container mb-3 mt-3" aria-label="...">
+  <ul class="pagination">
+    {% if games_list.has_previous %}
+    <li class="page-item ">
+      <a class="page-link" href="?page={{ games_list.previous_page_number }}">Previous</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled" aria-current="page">
+      <a class="page-link" href="">Previous</a>
+    </li>
+  {% endif %}
+    {% if games_list.number != 1 %}
+   <li class="page-item">
+      <a class="page-link" href="?page={{ games_list.number|add:'-1'}}">{{ games_list.number|add:'-1'}}</a>
+    </li>
+    {% else %}
+  {% endif %}
+    <li class="page-item active" aria-current="page">
+      <a class="page-link" href="?page={{ games_list.number }}">{{ games_list.number }}</a>
+    </li>
+       {% if games_list.number != games_list.paginator.num_pages %}
+   <li class="page-item">
+      <a class="page-link" href="?page={{ games_list.number|add:'1'}}">{{ games_list.number|add:'1'}}</a>
+    </li>
+    {% else %}
+  {% endif %}
+
+    {% if games_list.has_next %}
+    <li class="page-item " >
+      <a class="page-link" href="?page={{ games_list.next_page_number }}">Next</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="">Next</a>
+    </li>
+  {% endif %}
+  </ul>
+</div>
+<!--
+<div class="container mb-3">
+{{games_list}}
+page raqamini qaytaradi<br>
+  Has Previous : {{ games_list.has_previous }}Bitta orqaga qaytish mavjud bo'lsa True qaytaradi <br>
+  Has Next : {{ games_list.has_next }}Bitta oldingaga o'tish mavjud bo'lsa True qaytaradi <br>
+  Current Page : {{ games_list.number }}Hozirgi sahifaning tartib raqamini qaytaradi <br>
+  Number of Pages : {{ games_list.paginator.num_pages }}Sahifalar sonini qaytaradi qaytaradi<br>
+  -->
+<!--
+  {% if games_list.has_previous %}
+  <a href="?page=1">&laquo First</a> &page=1 degani 1-sahifa
+  <a href="?page={{ games_list.previous_page_number }}">Previous</a>oldingi sahifa
+  {% endif %}
+  Page {{ games_list.number }} of {{ games_list.paginator.num_pages }}
+  {% if games_list.has_next %}
+  <a href="?page={{ games_list.next_page_number }}">Next</a>keyingi sahifa
+  <a href="?page={{ games_list.paginator.num_pages }}">Last &raquo</a>oxirgi sahifa
+  {% endif %}
+</div>
+-->
+  {% endblock content %}

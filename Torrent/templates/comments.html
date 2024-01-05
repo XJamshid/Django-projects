@@ -1,0 +1,71 @@
+
+<div class="container mb-3">
+    <h5 class="card-title">Comments</h5>
+<ol class="list-group list-group-numbered">
+   {% for comment in comments_list %}
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold"><i class="fa-solid fa-user-large"></i>|{{comment.author}}</div>
+      {{comment.body}}
+    </div>
+    <span ><small class="text-body-secondary">{{comment.date|date:"j.m.Y, P"}}</small></span>
+  </li>
+    {% endfor %}
+</ol>
+
+</div>
+<div class="container mb-3 mt-3" aria-label="...">
+  <ul class="pagination">
+    {% if comments_list.has_previous %}
+    <li class="page-item ">
+      <a class="page-link" href="?page={{ comments_list.previous_page_number }}">Previous</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled" aria-current="page">
+      <a class="page-link" href="">Previous</a>
+    </li>
+  {% endif %}
+    {% if comments_list.number != 1 %}
+   <li class="page-item">
+      <a class="page-link" href="?page={{ comments_list.number|add:'-1'}}">{{ comments_list.number|add:'-1'}}</a>
+    </li>
+    {% else %}
+  {% endif %}
+    <li class="page-item active" aria-current="page">
+      <a class="page-link" href="?page={{ comments_list.number }}">{{ comments_list.number }}</a>
+    </li>
+       {% if comments_list.number != comments_list.paginator.num_pages %}
+   <li class="page-item">
+      <a class="page-link" href="?page={{ comments_list.number|add:'1'}}">{{ comments_list.number|add:'1'}}</a>
+    </li>
+    {% else %}
+  {% endif %}
+
+    {% if comments_list.has_next %}
+    <li class="page-item " >
+      <a class="page-link" href="?page={{ comments_list.next_page_number }}">Next</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="">Next</a>
+    </li>
+  {% endif %}
+  </ul>
+</div>
+{% if user.is_authenticated %}
+<div class="container mb-3">
+<form method="post" action="{% url 'comment_create' game.pk %}">
+  {% csrf_token %}
+  {{form.as_p}}
+  <!--<input name="comment" class="form-control me-auto" type="text" placeholder="Add your comment here..." aria-label="Add your comment here...">
+  -->
+  <button  type="submit" class="btn btn-outline-success">Submit</button>
+</form>
+</div>
+{% else %}
+<div class="container mb-3">
+<div class="alert alert-success" role="alert">
+    Sorry,you are not logged in.<a href="{% url 'login' %}" class="alert-link">Sign in</a> to add a comment
+</div>
+</div>
+{% endif %}

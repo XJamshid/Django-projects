@@ -1,0 +1,75 @@
+
+{% extends 'base.html' %}
+{% load embed_video_tags %}
+{% block content %}
+<div class="container mb-3 mt-3">
+  <div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{game.poster.url}}" class="img-fluid rounded-start" alt="game image">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ game.name }}</h5>
+        <p class="card-text">Release date:{{game.release_date|date:"j F Y"}}</p>
+        <p class="card-text">Categories:
+          {% for category in categories %}
+        {{category|title}},
+        {% endfor %}</p>
+          <p class="card-text">Developers:{{game.developer}}</p>
+          <p class="card-text">Platforms:{{game.platform}}</p>
+          <p class="card-text">OS:{{game.os}}</p>
+          <p class="card-text">Processor:{{game.processor}}</p>
+          <p class="card-text">RAM:{{game.ram}}</p>
+          <p class="card-text">Video-RAM:{{game.video_card}}</p>
+          <p class="card-text">Disk space:{{game.disk_space}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+    <form method="post" action="{% url 'like' game.pk %}">
+        <!-- Likelar uchun forma
+        Like tugmasi bosilganda like urliga yo'natiradi
+         -->
+        {% csrf_token %}
+        {% if liked %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{user.username}}</strong>,you have clicked like.If you want, you can click the dislike button to remove your like.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <button type="submit" class="btn btn-outline-danger"><i class="bi bi-hand-thumbs-down"></i> Dislike |+{{likes}} likes</button>
+        {% else %}
+        <button type="submit" class="btn btn-outline-success"><i class="bi bi-hand-thumbs-up"></i> Like |+{{likes}} likes</button>
+        {% endif %}
+    </form>
+    </div>
+<div class="container mb-3">
+  <h5 class="card-title">About game</h5>
+   <p class="card-text">{{game.about}}</p>
+</div>
+<div class="container mb-3">
+  <h5 class="card-title">Trailer/Gameplay</h5>
+<div class="container text-center mb-3 mt-3 ">
+  {% video game.trailer '480x360' %}
+
+</div>
+</div>
+<div class="container mb-3">
+  <h5 class="card-title">Game screenshots</h5>
+  <div class="container mb-3 mt-3">
+ <div class="row row-cols-1 row-cols-md-4 g-4">
+   {% for screenshot in screenshots %}
+    <a class="col" href="http://127.0.0.1:8000/media/{{screenshot}}">
+          <img src="http://127.0.0.1:8000/media/{{screenshot}}" style="max-width: 300px;" class="card-img-top" alt="...">
+    </a>
+        {% endfor %}
+</div>
+</div>
+</div>
+<div class="container text-center mb-3">
+    <h5 class="card-title">Size: {{game.disk_space}} | Portable</h5>
+    <a href="{{game.file.url}}" class="btn btn-outline-success">Download torrent file</a>
+</div>
+
+  {% include 'comments.html' %}
+{% endblock content %}
