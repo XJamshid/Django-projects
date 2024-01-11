@@ -21,7 +21,7 @@ from accounts.models import CustomUser
 class UrlsAPIView(APIView):
     authentication_classes = [authentication.SessionAuthentication,authentication.BasicAuthentication]
     def get(self,request,*args,**kwargs):
-        categories=reverse.reverse('categories',request=request)
+        categories=reverse.reverse('api_categories',request=request)
         all_games=reverse.reverse('games_list',request=request)
         #sign_up=reverse.reverse('sign_up',request=request)
         return Response({'urls':[categories,all_games]})

@@ -31,10 +31,13 @@
       </ul>
     </div>
     <div class="navbar-brand">
-      {{user.username}}
-      <i class="fa-solid fa-user-large"></i>
       {% if user.is_authenticated %}
-      <a class="btn btn-outline-danger" href="{% url 'logout' %}" role="button">Logout</a>
+      <form method="post" action="{% url 'logout' %}">
+        <i class="fa-solid fa-user-large"></i>
+        {{user.username}}
+        {% csrf_token %}
+        <button class="btn btn-outline-danger" type=submit">Logout</button>
+      </form>
       {% else %}
       <a class="btn btn-outline-success" href="{% url 'login' %}" role="button" aria-disabled="true">Login</a>
       <a class="btn btn-outline-warning" href="{% url 'registration' %}" role="button" aria-disabled="true">Sign up</a>
