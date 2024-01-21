@@ -36,7 +36,7 @@
         <i class="fa-solid fa-user-large"></i>
         {{user.username}}
         {% csrf_token %}
-        <button class="btn btn-outline-danger" type=submit">Logout</button>
+        <button class="btn btn-outline-danger" type="submit">Logout</button>
       </form>
       {% else %}
       <a class="btn btn-outline-success" href="{% url 'login' %}" role="button" aria-disabled="true">Login</a>

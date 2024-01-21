@@ -80,7 +80,6 @@ class NewGamesListView(generic.ListView):
                 games = games.order_by(filter).reverse()
         else:
             games=games.order_by('-release_date')
-        games=games[:32]
         p = Paginator(games, 8)
         page = self.request.GET.get('page')
         games_list = p.get_page(page)

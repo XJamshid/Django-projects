@@ -44,7 +44,6 @@ class CategoryGameListAPIView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         category = kwargs.get('category')
         queryset=self.get_queryset()
-        print(type(queryset))
         games = queryset.filter(category__name__icontains=category)
         serializer = self.get_serializer(games, many=True)
         return Response(serializer.data)
