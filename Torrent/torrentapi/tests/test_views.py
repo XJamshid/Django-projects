@@ -149,6 +149,14 @@ class TestViews(APITestCase):
             'trailer':'https://www.youtube.com/watch?v=o3V-GvvzjE43',
             'screenshots':self.screenshot.pk,
             'file':self.create_image(),
+            'platform': 'platform',
+            'developer': 'developer',
+            'os': 'os',
+            'processor': 'processor',
+            'ram': 'ram',
+            'video_card': 'video_card',
+            'disk_space': 'disk_space',
+            'about': 'about',
         }
         response=self.client.put(reverse('game_edit',args=['Test']),data=data,format='multipart')
         game=Game.objects.get(pk=1)

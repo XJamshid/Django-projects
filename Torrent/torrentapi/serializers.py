@@ -51,7 +51,15 @@ class GameAddSerializer(serializers.ModelSerializer):
             'poster',
             'trailer',
             'screenshots',
-            'file'
+            'file',
+            'developer',
+            'platform',
+            'os',
+            'processor',
+            'ram',
+            'video_card',
+            'disk_space',
+            'about',
         ]
 class GameCategoriesSerializer(serializers.RelatedField):
     def to_representation(self,value):
@@ -76,6 +84,14 @@ class GameDetailSerializer(serializers.ModelSerializer):
             'trailer',
             'screenshots',
             'file',
+            'developer',
+            'platform',
+            'os',
+            'processor',
+            'ram',
+            'video_card',
+            'disk_space',
+            'about',
             'edit_url',
             'delete_url',
         ]
@@ -102,6 +118,14 @@ class GameUpdateSerializer(serializers.ModelSerializer):
             'trailer',
             'screenshots',
             'file',
+            'developer',
+            'platform',
+            'os',
+            'processor',
+            'ram',
+            'video_card',
+            'disk_space',
+            'about',
         ]
 class SignUpSerializer(serializers.ModelSerializer):
     class Meta:
