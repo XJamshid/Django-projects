@@ -1,2 +1,2 @@
 # Django-projects
-Bu repositoryda Blog va News nomli kichik loyihalarim bor
+Bu repositoryda Djangoda qilingan loyihalarim bor 
