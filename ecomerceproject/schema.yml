@@ -1,0 +1,1169 @@
+openapi: 3.0.3
+info:
+  title: E-commerce API
+  version: 1.0.0
+  description: E-commerce API ning qisqa sxemasi
+paths:
+  /api/:
+    get:
+      operationId: api_retrieve
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/account/:
+    get:
+      operationId: api_account_retrieve
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDetail'
+          description: ''
+  /api/account/edit_profile/{id}/:
+    put:
+      operationId: api_account_edit_profile_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProfileDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProfileDetail'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileDetail'
+          description: ''
+    patch:
+      operationId: api_account_edit_profile_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProfileDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProfileDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProfileDetail'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileDetail'
+          description: ''
+  /api/account/shipments/:
+    get:
+      operationId: api_account_shipments_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShipmentList'
+          description: ''
+  /api/account/wishlist/:
+    get:
+      operationId: api_account_wishlist_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductList'
+          description: ''
+  /api/add_to_cart/{slug}/:
+    post:
+      operationId: api_add_to_cart_create
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItemCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartItemCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartItemCreate'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItemCreate'
+          description: ''
+  /api/cart/:
+    get:
+      operationId: api_cart_retrieve
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/cart/product_remove/{id}/:
+    delete:
+      operationId: api_cart_product_remove_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/cart/update_quantity/{id}/:
+    put:
+      operationId: api_cart_update_quantity_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItemQuantityUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartItemQuantityUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartItemQuantityUpdate'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItemQuantityUpdate'
+          description: ''
+    patch:
+      operationId: api_cart_update_quantity_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItemQuantityUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItemQuantityUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItemQuantityUpdate'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItemQuantityUpdate'
+          description: ''
+  /api/cart_create/:
+    post:
+      operationId: api_cart_create_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartCreate'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartCreate'
+          description: ''
+  /api/categories/:
+    get:
+      operationId: api_categories_list
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryList'
+          description: ''
+  /api/categories/{slug}/:
+    get:
+      operationId: api_categories_list_2
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductList'
+          description: ''
+  /api/home/:
+    get:
+      operationId: api_home_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductList'
+          description: ''
+  /api/home/low_prices:
+    get:
+      operationId: api_home_low_prices_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductList'
+          description: ''
+  /api/home/new_additions:
+    get:
+      operationId: api_home_new_additions_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductList'
+          description: ''
+  /api/home/recommendations/:
+    get:
+      operationId: api_home_recommendations_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductList'
+          description: ''
+  /api/products/:
+    get:
+      operationId: api_products_list
+      parameters:
+      - in: query
+        name: name__icontains
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: price_max
+        schema:
+          type: number
+          format: double
+      - in: query
+        name: price_min
+        schema:
+          type: number
+          format: double
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProductListList'
+          description: ''
+  /api/products/{slug}/:
+    get:
+      operationId: api_products_retrieve
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetail'
+          description: ''
+  /api/products/{slug}/comment:
+    post:
+      operationId: api_products_comment_create
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentAdd'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CommentAdd'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CommentAdd'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentAdd'
+          description: ''
+  /api/products/{slug}/like:
+    post:
+      operationId: api_products_like_create
+      parameters:
+      - in: path
+        name: slug
+        schema:
+          type: string
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/registration/:
+    post:
+      operationId: api_registration_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Registration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Registration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Registration'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Registration'
+          description: ''
+  /api/shipment/:
+    post:
+      operationId: api_shipment_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShippingAddress'
+          description: ''
+  /api/shipments/:
+    get:
+      operationId: api_shipments_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShipmentList'
+          description: ''
+  /api/shipping_address/:
+    get:
+      operationId: api_shipping_address_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShippingAddress'
+          description: ''
+  /api/shipping_address/{id}/edit/:
+    put:
+      operationId: api_shipping_address_edit_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShippingAddress'
+          description: ''
+    patch:
+      operationId: api_shipping_address_edit_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedShippingAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedShippingAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedShippingAddress'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShippingAddress'
+          description: ''
+  /api/shipping_address_create/:
+    post:
+      operationId: api_shipping_address_create_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShippingAddress'
+          description: ''
+components:
+  schemas:
+    AccountDetail:
+      type: object
+      properties:
+        profile:
+          type: string
+          readOnly: true
+        profile_edit:
+          type: string
+          format: uri
+          readOnly: true
+        shipments:
+          type: string
+          readOnly: true
+        wishlist:
+          type: string
+          readOnly: true
+        shipping_address:
+          type: string
+          readOnly: true
+        create_shipping_address:
+          type: string
+          readOnly: true
+      required:
+      - create_shipping_address
+      - profile
+      - profile_edit
+      - shipments
+      - shipping_address
+      - wishlist
+    CartCreate:
+      type: object
+      properties:
+        customer:
+          type: integer
+      required:
+      - customer
+    CartItemCreate:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+      required:
+      - quantity
+    CartItemQuantityUpdate:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+      required:
+      - quantity
+    CategoryList:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        products:
+          type: string
+          readOnly: true
+      required:
+      - name
+      - products
+    CommentAdd:
+      type: object
+      properties:
+        body:
+          type: string
+          nullable: true
+        rating:
+          nullable: true
+          minimum: 0
+          maximum: 9223372036854775807
+          oneOf:
+          - $ref: '#/components/schemas/RatingEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        image:
+          type: array
+          items:
+            type: integer
+      required:
+      - image
+    Nested:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        region:
+          type: string
+          maxLength: 200
+        city_or_district:
+          type: string
+          maxLength: 200
+        neighborhood:
+          type: string
+          maxLength: 200
+        street:
+          type: string
+          maxLength: 200
+        post_code:
+          type: string
+          nullable: true
+          maxLength: 10
+        home_number:
+          type: string
+          maxLength: 200
+        customer:
+          type: integer
+      required:
+      - city_or_district
+      - customer
+      - home_number
+      - id
+      - neighborhood
+      - region
+      - street
+    NullEnum:
+      enum:
+      - null
+    PaginatedProductListList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductList'
+    PatchedCartItemQuantityUpdate:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+    PatchedProfileDetail:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        date_of_birth:
+          type: string
+          format: date
+          nullable: true
+    PatchedShippingAddress:
+      type: object
+      properties:
+        region:
+          type: string
+          maxLength: 200
+        city_or_district:
+          type: string
+          maxLength: 200
+        neighborhood:
+          type: string
+          maxLength: 200
+        street:
+          type: string
+          maxLength: 200
+        home_number:
+          type: string
+          maxLength: 200
+        post_code:
+          type: string
+          nullable: true
+          maxLength: 10
+    ProductDetail:
+      type: object
+      properties:
+        images:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 200
+        brand:
+          type: string
+          nullable: true
+          maxLength: 200
+        category:
+          type: string
+          readOnly: true
+        price:
+          type: number
+          format: double
+        description:
+          type: string
+        num_likes:
+          type: string
+          readOnly: true
+        comments:
+          type: string
+          readOnly: true
+        add_to_cart:
+          type: string
+          format: uri
+          readOnly: true
+        comment_create:
+          type: string
+          format: uri
+          readOnly: true
+        like:
+          type: string
+          readOnly: true
+        related_products:
+          type: string
+          readOnly: true
+      required:
+      - add_to_cart
+      - category
+      - comment_create
+      - comments
+      - description
+      - images
+      - like
+      - name
+      - num_likes
+      - price
+      - related_products
+    ProductList:
+      type: object
+      properties:
+        image:
+          type: string
+          readOnly: true
+        rating:
+          type: string
+          readOnly: true
+        count:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        name:
+          type: string
+          maxLength: 200
+        price:
+          type: string
+          readOnly: true
+        num_orders:
+          type: string
+          readOnly: true
+        detail:
+          type: string
+          readOnly: true
+        add_to_cart:
+          type: string
+          format: uri
+          readOnly: true
+      required:
+      - add_to_cart
+      - detail
+      - image
+      - name
+      - num_orders
+      - price
+      - rating
+    ProfileDetail:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        date_of_birth:
+          type: string
+          format: date
+          nullable: true
+      required:
+      - username
+    RatingEnum:
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      type: integer
+      description: |-
+        * `0` - 0
+        * `1` - 1
+        * `2` - 2
+        * `3` - 3
+        * `4` - 4
+        * `5` - 5
+    Registration:
+      type: object
+      properties:
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        date_of_birth:
+          type: string
+          format: date
+          nullable: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        password2:
+          type: string
+          writeOnly: true
+      required:
+      - password
+      - password2
+      - username
+    ShipmentList:
+      type: object
+      properties:
+        order:
+          type: string
+          readOnly: true
+        address:
+          allOf:
+          - $ref: '#/components/schemas/Nested'
+          readOnly: true
+        purchase_time:
+          type: string
+          format: date-time
+          readOnly: true
+        total_cost:
+          type: string
+          readOnly: true
+      required:
+      - address
+      - order
+      - purchase_time
+      - total_cost
+    ShippingAddress:
+      type: object
+      properties:
+        region:
+          type: string
+          maxLength: 200
+        city_or_district:
+          type: string
+          maxLength: 200
+        neighborhood:
+          type: string
+          maxLength: 200
+        street:
+          type: string
+          maxLength: 200
+        home_number:
+          type: string
+          maxLength: 200
+        post_code:
+          type: string
+          nullable: true
+          maxLength: 10
+      required:
+      - city_or_district
+      - home_number
+      - neighborhood
+      - region
+      - street
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
