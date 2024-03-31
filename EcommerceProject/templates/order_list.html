@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Organi Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'home' %}">Bosh sahifa</a>
+                            <a href="{% url 'account_detail' %}">Account</a>
+                            <span>Buyurtmalar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+
+<div class="container mb-5 mt-5">
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for shipment in shipment_list %}
+      <div class="col">
+          <div class="card border-info mb-3" style="max-width: 18rem;">
+              <div class="card-header">{{shipment.orderitem.product.name}}</div>
+              <div class="card-body">
+                  <h6 class="card-title">Yetkazish manzili</h6>
+                <p class="card-text">Pochta kodi {{shipment.address.post_code}}</p>
+              <p class="card-text"><small class="text-body-secondary">Xarid vaqti {{shipment.purchase_time}}</small></p>
+              <a role="button" href="{% url 'shipment_detail' shipment.orderitem.pk %}" class="btn btn-outline-info">Ko'proq</a>
+              </div>
+          </div>
+            </div>
+    {% endfor %}
+    </div>
+</div>
+
+
+{% endblock content %}

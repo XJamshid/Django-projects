@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Ogani Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'home' %}">Bosh sahifa</a>
+                            <a href="{% url 'account_detail' %}">Account</a>
+                            <a href="{% url 'shipments' %}">Buyurtmalar</a>
+                            <span>{{orderitem.product.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large"
+                                src="{{image_url}}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <h3>{{orderitem.product.name}}</h3>
+                        <ul>
+                            <li>Soni : <span>{{orderitem.quantity}}</span></li>
+                            <li>Xarid vaqti : <span>{{purchase_time}}</span></li>
+                            <h4>Yetkazish manzili</h4>
+                            <li>Ism : <span>{{shipping_address.first_name}}</span></li>
+                            <li>Familiya : <span>{{shipping_address.last_name}}</span></li>
+                            <li>Elektron pochta : <span>{{shipping_address.email}}</span></li>
+                            <li>Telefon raqam : <span>{{shipping_address.phone}}</span></li>
+                            <li>Viloyat : <span>{{shipping_address.region}}</span></li>
+                            <li>Shahar/Tuman : <span>{{shipping_address.city_or_district}}</span></li>
+                            <li>Mahalla : <span>{{shipping_address.neighborhood}}</span></li>
+                            <li>Ko'cha : <span>{{shipping_address.street}}</span></li>
+                            <li>Uy/Kvartira : <span>{{shipping_address.home_number}}</span></li>
+                            <li>Pochta kodi : <span>{{shipping_address.post_code}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" role="tab"
+                                    aria-selected="true">Izohlar</a>
+                            </li>
+                        </ul>
+                        <div class="list-group">
+                                    {% if comments %}
+                                        {% for comment in comments %}
+                                        <a href="{% url 'comment_detail' comment.pk %}" class="list-group-item list-group-item-action" aria-current="true">
+                                        <div class="d-flex w-100 justify-content-between">
+                                          <h5 class="mb-1">{{comment.customer.username}}</h5>
+                                        </div>
+                                        <p class="mb-1">{{comment.body}}</p>
+                                        <small>{{comment.date}}</small>
+                                      </a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="container mb-3 mt-3" aria-label="...">
+                                          <ul class="pagination">
+                                            {% if comments.has_previous %}
+                                            <li class="page-item ">
+                                              <a class="page-link" href="?page={{ comments.previous_page_number }}">Oldingi</a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item disabled" aria-current="page">
+                                              <a class="page-link" href="">Oldingi</a>
+                                            </li>
+                                          {% endif %}
+                                            {% if comments.number != 1 %}
+                                           <li class="page-item">
+                                              <a class="page-link" href="?page={{ comments.number|add:'-1'}}">{{ comments.number|add:'-1'}}</a>
+                                            </li>
+                                            {% else %}
+                                          {% endif %}
+                                            <li class="page-item active" aria-current="page">
+                                              <a class="page-link" href="?page={{ comments.number }}">{{ comments.number }}</a>
+                                            </li>
+                                               {% if comments.number != comments.paginator.num_pages %}
+                                           <li class="page-item">
+                                              <a class="page-link" href="?page={{ comments.number|add:'1'}}">{{ comments.number|add:'1'}}</a>
+                                            </li>
+                                            {% else %}
+                                          {% endif %}
+
+                                            {% if related_products.has_next %}
+                                            <li class="page-item " >
+                                              <a class="page-link" href="?page={{ comments.next_page_number }}">Keyingi</a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item disabled">
+                                              <a class="page-link" href="">Keyingi</a>
+                                            </li>
+                                          {% endif %}
+                                          </ul>
+                                        </div>
+                                    {% endif %}
+                </div>
+                    <div class="container mt-3">
+                        <a href="{% url 'comment_create' orderitem.product.slug %}" class="btn btn-outline-success" role="button">Izoh qo'shish</a>
+                    </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+
+
+{% endblock content %}

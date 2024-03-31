@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Organi Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'home' %}">Bosh sahifa</a>
+                            <a href="{% url 'account_detail' %}">Account</a>
+                            <a href="{% url 'shipping_address_list' %}">Yetkazish manzillari</a>
+                            <span>Manzil</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <div class="container mb-5 mt-5">
+<form action="{% url 'shipping_address_detail' pk %}" method="post" >{% csrf_token %}
+    {{ form|crispy }}
+    {% if is_shipping_address %}
+    <div class="alert alert-block alert-danger">
+        <ul class="m-0">
+            <li>
+                Bu manzil yetkazish manzili.Uni o'chirib yoki tahrirlab bo'lmaydi
+            </li>
+        </ul>
+    </div>
+    {% else %}
+    <input class="btn btn-outline-primary" type="submit" value="O'zgartirish">
+    <a class="btn btn-outline-danger" role="button" href="{% url 'shipping_address_delete' pk %} ">Manzilni o'chirish</a>
+    {% endif %}
+</form>
+</div>
+
+
+{% endblock content %}

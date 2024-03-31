@@ -1,0 +1,75 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+
+<!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Organi Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'home' %}">Bosh sahifa</a>
+                            <a href="{% url 'account_detail' %}">Account</a>
+                            <span>Sevimlilar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Section Begin -->
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-7">
+                    <div class="row">
+                        {% for product in wishlist %}
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="product__discount__item">
+                                        <div class="product__discount__item__pic set-bg"
+                                            data-setbg="{{product.image.url}}">
+                                            {% if product.discount %}
+                                            <div class="product__discount__percent">-{{product.sale_off}}%</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="product__discount__item__text">
+                                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                <form method="post" action="{% url 'add_to_cart' product.slug %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-outline-success" type="submit"><i class="fa fa-shopping-cart"></i></button>
+                                                </form>
+                                              <form method="post" action="{% url 'like' product.slug %}">
+                                                {% csrf_token %}
+                                                  {% if product.is_liked %}
+                                                <button class="btn btn-danger" type="submit"><i class="fa fa-heart"></i></button>
+                                                  {% else %}
+                                                  <button class="btn btn-outline-danger" type="submit"><i class="fa fa-heart"></i></button>
+                                                  {% endif %}
+                                                </form>
+                                            </div>
+                                            <h5><a href="{% url 'product' product.slug %}">{{product.name}}</a></h5>
+                                            <div class="product__item__price">
+                                                {% if product.discount %}
+                                                {{product.discount_price}} UZS
+                                                <span>{{product.price}} UZS</span>
+                                                {% else %}
+                                                {{product.price}} UZS
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+{% endblock content %}

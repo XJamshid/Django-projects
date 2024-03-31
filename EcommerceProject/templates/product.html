@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Ogani Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'home' %}">Bosh sahifa</a>
+                            <a href="{% url 'category' product.category.slug %}">{{product.category.name}}</a>
+                            <span>{{product.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large"
+                                src="{{main_image}}" alt="">
+                        </div>
+                        <div class="product__details__pic__slider owl-carousel">
+                            {% for image in images %}
+                            <img data-imgbigurl="{{image}}"
+                                src="{{image}}" alt="">
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <h3>{{product.name}}</h3>
+                        <ul>
+                            <li>Reyting : <span>{{rating}}/5</span></li>
+                            <li>Buyurtmalar : <span>{{orders}} ta</span></li>
+                            <li>Sotuvda : <span>{{product.count}} ta</span></li>
+                        </ul>
+
+                        <div class="product__details__price">
+                            {% if product.discount %}
+                            {{product.discount_price}} UZS
+                            {% else %}
+                            {{product.price}}
+                            {% endif %}
+                        </div>
+                        <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
+                            vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
+                            quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                <form method="post" action="{% url 'add_to_cart' product.slug %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-outline-success" type="submit">Savatga qo'shish <i class="fa fa-shopping-cart"></i></button>
+                                                </form>
+                                              <form method="post" action="{% url 'like' product.slug %}">
+                                                {% csrf_token %}
+                                                  {% if is_liked %}
+                                                <button class="btn btn-danger" type="submit">Sevimlilardan o'chirish<i class="fa fa-heart"></i></button>
+                                                  {% else %}
+                                                  <button class="btn btn-outline-danger" type="submit">Sevimlilarga qo'shish<i class="fa fa-heart"></i></button>
+                                                  {% endif %}
+                                                </form>
+                                            </div>
+                    </div>
+                    <br>
+                    {% if user.is_superuser %}
+                                        <a href="{% url 'product_update' product.slug %}" role="button" class="btn btn-outline-info" >Maxsulotni yangilash <i class="bi bi-database-add"></i></a>
+                                        <a href="{% url 'product_delete' product.slug %}" role="button" class="btn btn-outline-danger" >Maxsulotni o'chirish <i class="bi bi-database-add"></i></a>
+                                    {% endif %}
+                </div>
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" role="tab"
+                                    aria-selected="true">Maxsulot haqida</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    <p>
+                                        {{product.description}}
+                                    </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" role="tab"
+                                    aria-selected="true">Izohlar</a>
+                            </li>
+                        </ul>
+                        <div class="list-group">
+                                    {% if comments %}
+                                        {% for comment in comments %}
+                                        <a href="{% url 'comment_detail' comment.pk %}" class="list-group-item list-group-item-action" aria-current="true">
+                                        <div class="d-flex w-100 justify-content-between">
+                                          <h5 class="mb-1">{{comment.customer.username}}</h5>
+                                        </div>
+                                        <p class="mb-1">{{comment.body}}</p>
+                                        <small>{{comment.date}}</small>
+                                      </a>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="container mb-3 mt-3" aria-label="...">
+                          <ul class="pagination">
+                            {% if comments.has_previous %}
+                            <li class="page-item ">
+                              <a class="page-link" href="?page1={{ comments.previous_page_number }}">Oldingi</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled" aria-current="page">
+                              <a class="page-link" href="">Oldingi</a>
+                            </li>
+                          {% endif %}
+                            {% if comments.number != 1 %}
+                           <li class="page-item">
+                              <a class="page-link" href="?page1={{ comments.number|add:'-1'}}">{{ comments.number|add:'-1'}}</a>
+                            </li>
+                            {% else %}
+                          {% endif %}
+                            <li class="page-item active" aria-current="page">
+                              <a class="page-link" href="?page1={{ comments.number }}">{{ comments.number }}</a>
+                            </li>
+                               {% if comments.number != comments.paginator.num_pages %}
+                           <li class="page-item">
+                              <a class="page-link" href="?page1={{ comments.number|add:'1'}}">{{ comments.number|add:'1'}}</a>
+                            </li>
+                            {% else %}
+                          {% endif %}
+
+                            {% if related_products.has_next %}
+                            <li class="page-item " >
+                              <a class="page-link" href="?page1={{ comments.next_page_number }}">Keyingi</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                              <a class="page-link" href="">Keyingi</a>
+                            </li>
+                          {% endif %}
+                          </ul>
+                        </div>
+                                    {% endif %}
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+
+    <!-- Related Product Section Begin -->
+    <section class="related-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                        <h2>O'xshash maxsulotlar</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for product in related_products %}
+                <div class="col-lg-4">
+                    <div class="product__discount__item">
+                        <div class="product__discount__item__pic set-bg"
+                             data-setbg="{{product.image.url}}">
+                            {% if product.discount %}
+                            <div class="product__discount__percent">-{{product.sale_off}}%</div>
+                            {% endif %}
+                        </div>
+                        <div class="product__discount__item__text">
+                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                <form method="post" action="{% url 'add_to_cart' product.slug %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-outline-success" type="submit"><i class="fa fa-shopping-cart"></i></button>
+                                                </form>
+                                              <form method="post" action="{% url 'like' product.slug %}">
+                                                {% csrf_token %}
+                                                  {% if product.is_liked %}
+                                                <button class="btn btn-danger" type="submit"><i class="fa fa-heart"></i></button>
+                                                  {% else %}
+                                                  <button class="btn btn-outline-danger" type="submit"><i class="fa fa-heart"></i></button>
+                                                  {% endif %}
+                                                </form>
+                                            </div>
+                                            <h5><a href="{% url 'product' product.slug %}">{{product.name}}</a></h5>
+                                            <div class="product__item__price">
+                                                {% if product.discount %}
+                                                {{product.discount_price}} UZS
+                                                <span>{{product.price}} UZS</span>
+                                                {% else %}
+                                                {{product.price}} UZS
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="container mb-3 mt-3" aria-label="...">
+  <ul class="pagination">
+    {% if related_products.has_previous %}
+    <li class="page-item ">
+      <a class="page-link" href="?page={{ related_products.previous_page_number }}">Oldingi</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled" aria-current="page">
+      <a class="page-link" href="">Oldingi</a>
+    </li>
+  {% endif %}
+    {% if related_products.number != 1 %}
+   <li class="page-item">
+      <a class="page-link" href="?page={{ related_products.number|add:'-1'}}">{{ related_products.number|add:'-1'}}</a>
+    </li>
+    {% else %}
+  {% endif %}
+    <li class="page-item active" aria-current="page">
+      <a class="page-link" href="?page={{ related_products.number }}">{{ related_products.number }}</a>
+    </li>
+       {% if related_products.number != related_products.paginator.num_pages %}
+   <li class="page-item">
+      <a class="page-link" href="?page={{ related_products.number|add:'1'}}">{{ related_products.number|add:'1'}}</a>
+    </li>
+    {% else %}
+  {% endif %}
+
+    {% if related_products.has_next %}
+    <li class="page-item " >
+      <a class="page-link" href="?page={{ related_products.next_page_number }}">Keyingi</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="">Keyingi</a>
+    </li>
+  {% endif %}
+  </ul>
+</div>
+            </div>
+        </div>
+
+    </section>
+    <!-- Related Product Section End -->
+
+
+{% endblock content %}

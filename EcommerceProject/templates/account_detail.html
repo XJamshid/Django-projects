@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Organi Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'home' %}">Bosh sahifa</a>
+                            <span>{{customer.last_name}} {{customer.first_name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="cart" viewBox="0 0 16 16">
+    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+  </symbol>
+  <symbol id="door-closed" viewBox="0 0 16 16">
+    <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
+    <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
+  </symbol>
+  <symbol id="profile" viewBox="0 0 16 16">
+  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+  </symbol>
+  <symbol id="location" viewBox="0 0 16 16">
+<path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+  <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>  </symbol>
+  <symbol id="wishlist" viewBox="0 0 16 16">
+    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+  </symbol>
+    <symbol id="add_to_db" viewBox="0 0 16 16">
+        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
+  <path d="M12.096 6.223A5 5 0 0 0 13 5.698V7c0 .289-.213.654-.753 1.007a4.5 4.5 0 0 1 1.753.25V4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16c.536 0 1.058-.034 1.555-.097a4.5 4.5 0 0 1-.813-.927Q8.378 15 8 15c-1.464 0-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13h.027a4.6 4.6 0 0 1 0-1H8c-1.464 0-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10q.393 0 .774-.024a4.5 4.5 0 0 1 1.102-1.132C9.298 8.944 8.666 9 8 9c-1.464 0-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777M3 4c0-.374.356-.875 1.318-1.313C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4"/>
+    </symbol>
+</svg>
+
+<main class="d-flex flex-nowrap">
+  <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
+    <a  class="d-flex align-items-center link-body-emphasis text-decoration-none" >
+        <img src="{% static 'img/user.png/' %}" alt="" width="64" height="64" class="rounded-circle me-2">
+        <strong>{{customer.last_name|slice:":1"}}.{{customer.first_name}}</strong>
+      </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="{% url 'shipments' %}" class="nav-link link-body-emphasis" aria-current="page">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#cart"/></svg>
+          Buyurtmalar
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'wishlist' %}" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#wishlist"/></svg>
+          Sevimlilar
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'shipping_address_list' %}" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#location"/></svg>
+          Yetkazish manzillari
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'profile_detail' %}" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#profile"/></svg>
+          Profil
+        </a>
+      </li>
+        {% if user.is_superuser %}
+        <li>
+        <a href="{% url 'product_create' %}" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#add_to_db"/></svg>
+          Maxsulot qo'shish
+        </a>
+      </li>
+        <li>
+        <a href="{% url 'category_create' %}" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#add_to_db"/></svg>
+          Kategoriya qo'shish
+        </a>
+      </li>
+        {% endif %}
+      <li>
+          <form method="post" action="{% url 'log_out' %}">
+        {% csrf_token %}
+        <button class="nav-link link-body-emphasis" type="submit">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#door-closed"/></svg>
+            Chiqish</button>
+      </form>
+      </li>
+
+    </ul>
+    <hr>
+  </div>
+
+
+</main>
+{% endblock content %}

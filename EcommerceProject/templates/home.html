@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<!-- Hero Section Begin -->
+    <section class="hero hero-normal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Barcha kategoriyalar</span>
+                        </div>
+                        <ul>
+                            {% for category in categories %}
+                            <li><a href="{% url 'category' category.slug %}">{{category.name}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form method="get" action="{% url 'search' %}">
+                                <input type="text" name="search" placeholder="Mahsulot nomini kiriting ...">
+                                <button type="submit" class="site-btn">QIDIRISH</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Featured Section Begin -->
+    <section class="featured spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Tavsiyalar</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                            <div class="product__discount__slider owl-carousel">
+                                {% for product in recommendations %}
+                                <div class="col-lg-4">
+                                    <div class="product__discount__item">
+                                        <div class="product__discount__item__pic set-bg"
+                                            data-setbg="{{product.image.url}}">
+                                            {% if product.discount %}
+                                            <div class="product__discount__percent">-{{product.sale_off}}%</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="product__discount__item__text">
+                                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                <form method="post" action="{% url 'add_to_cart' product.slug %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-outline-success" type="submit"><i class="fa fa-shopping-cart"></i></button>
+                                                </form>
+                                              <form method="post" action="{% url 'like' product.slug %}">
+                                                {% csrf_token %}
+                                                  {% if product.is_liked %}
+                                                <button class="btn btn-danger" type="submit"><i class="fa fa-heart"></i></button>
+                                                  {% else %}
+                                                  <button class="btn btn-outline-danger" type="submit"><i class="fa fa-heart"></i></button>
+                                                  {% endif %}
+                                                </form>
+                                            </div>
+                                            <h5><a href="{% url 'product' product.slug %}">{{product.name}}</a></h5>
+                                            <div class="product__item__price">
+                                                {% if product.discount %}
+                                                {{product.discount_price}} UZS
+                                                <span>{{product.price}} UZS</span>
+                                                {% else %}
+                                                {{product.price}} UZS
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Arzon narxlar</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                            <div class="product__discount__slider owl-carousel">
+                                {% for product in low_prices %}
+                                <div class="col-lg-4">
+                                    <div class="product__discount__item">
+                                        <div class="product__discount__item__pic set-bg"
+                                            data-setbg="{{product.image.url}}">
+                                            {% if product.discount %}
+                                            <div class="product__discount__percent">-{{product.sale_off}}%</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="product__discount__item__text">
+                                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                <form method="post" action="{% url 'add_to_cart' product.slug %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-outline-success" type="submit"><i class="fa fa-shopping-cart"></i></button>
+                                                </form>
+                                              <form method="post" action="{% url 'like' product.slug %}">
+                                                {% csrf_token %}
+                                                  {% if product.is_liked %}
+                                                <button class="btn btn-danger" type="submit"><i class="fa fa-heart"></i></button>
+                                                  {% else %}
+                                                  <button class="btn btn-outline-danger" type="submit"><i class="fa fa-heart"></i></button>
+                                                  {% endif %}
+                                                </form>
+                                            </div>
+                                            <h5><a href="{% url 'product' product.slug %}">{{product.name}}</a></h5>
+                                            <div class="product__item__price">
+                                                {% if product.discount %}
+                                                {{product.discount_price}} UZS
+                                                <span>{{product.price}} UZS</span>
+                                                {% else %}
+                                                {{product.price}} UZS
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+        </div>
+
+                <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Oxirgi qo'shilganlar</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                            <div class="product__discount__slider owl-carousel">
+                                {% for product in new_additions %}
+                                <div class="col-lg-4">
+                                    <div class="product__discount__item">
+                                        <div class="product__discount__item__pic set-bg"
+                                            data-setbg="{{product.image.url}}">
+                                            {% if product.discount %}
+                                            <div class="product__discount__percent">-{{product.sale_off}}%</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="product__discount__item__text">
+                                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                <form method="post" action="{% url 'add_to_cart' product.slug %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-outline-success" type="submit"><i class="fa fa-shopping-cart"></i></button>
+                                                </form>
+                                              <form method="post" action="{% url 'like' product.slug %}">
+                                                {% csrf_token %}
+                                                  {% if product.is_liked %}
+                                                <button class="btn btn-danger" type="submit"><i class="fa fa-heart"></i></button>
+                                                  {% else %}
+                                                  <button class="btn btn-outline-danger" type="submit"><i class="fa fa-heart"></i></button>
+                                                  {% endif %}
+                                                </form>
+                                            </div>
+                                            <h5><a href="{% url 'product' product.slug %}">{{product.name}}</a></h5>
+                                            <div class="product__item__price">
+                                                {% if product.discount %}
+                                                {{product.discount_price}} UZS
+                                                <span>{{product.price}} UZS</span>
+                                                {% else %}
+                                                {{product.price}} UZS
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+        </div>
+    </section>
+    <!-- Featured Section End -->
+    {% else %}
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+      <symbol id="check2" viewBox="0 0 16 16">
+        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+      </symbol>
+      <symbol id="circle-half" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+      </symbol>
+      <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+        <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+      </symbol>
+      <symbol id="sun-fill" viewBox="0 0 16 16">
+        <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+      </symbol>
+    </svg>
+<main>
+
+  <div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="{% static 'img/logo.png' %}" alt="">
+    <h1 class="display-5 fw-bold text-body-emphasis">Saytga xushkelibsiz</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Saytdan foydalanish <span class="badge text-bg-warning">Ro'yxatdan o'tish</span> yordamida royxatdan o'tib <span class="badge text-bg-success">Kirish</span> yordamida saytga kiring. </p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <a class="btn btn-outline-success" href="{% url 'log_in' %}" role="button" aria-disabled="true">Kirish</a>
+      <a class="btn btn-outline-warning" href="{% url 'registration' %}" role="button" aria-disabled="true">Ro'yxatdan o'tish</a>
+      </div>
+    </div>
+  </div>
+</main>
+    {% endif %}
+{% endblock content %}

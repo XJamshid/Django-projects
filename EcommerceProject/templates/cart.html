@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Ogani Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'home' %}">Bosh sahifa</a>
+                            <span>Savat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Shoping Cart Section Begin -->
+
+    <section class="shoping-cart spad">
+        <form method="post" action="{% url 'update_cart' order.pk %}" class="container">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">Maxsulot</th>
+                                    <th>Narx</th>
+                                    <th>Son</th>
+                                    <th>Umumiy narx</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for orderitem in order_items %}
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <a class="latest-product__item">
+                                            <div class="latest-product__item__pic">
+                                                <img src="{{orderitem.image.image.url}}" alt="">
+                                            </div>
+                                            <div class="latest-product__item__text">
+                                                <h6>{{orderitem.name}}</h6>
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        {{orderitem.price}} UZS
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="number" min="1" max="{{orderitem.count}}" name="{{orderitem.slug}}" value="{{orderitem.quantity}}">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        {{orderitem.total_price}} UZS
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <a href="{% url 'delete_orderitem' orderitem.pk %}" class="btn btn-outline-danger" role="button"><span class="icon_close"></span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a href="{% url 'home' %}" class="btn btn-outline-info primary-btn cart-btn">XARIDNI DAVOM ETTIRISH</a>
+                        <button type="submit" class="btn btn-outline-secondary primary-btn  cart-btn cart-btn-right"><span class="icon_loading"></span>
+                            SAVATNI YANGILASH</button>
+                    </div>
+                </div>
+                {% if is_empty %}
+                <div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <h5>Xarid narxlari</h5>
+                        <ul>
+                            <li>Umumiy <span>{{cart_total}} UZS</span></li>
+                        </ul>
+                        <a href="{% url 'shipping_address_create' order.pk %}" class="primary-btn">XARID JARAYONI</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </form>
+    </section>
+    <!-- Shoping Cart Section End -->
+
+
+{% endblock content %}

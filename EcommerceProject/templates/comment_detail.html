@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Ogani Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'home' %}">Bosh sahifa</a>
+                            <span>Izoh</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+        <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" role="tab"
+                                    aria-selected="true">Izoh</a>
+                            </li>
+                        </ul>
+                        <div class="container mb-3">
+                          <div class="container mb-3 mt-3">
+                         <div class="row row-cols-1 row-cols-md-4 g-4">
+                           {% for image in images %}
+                            <a class="col" href="{{image.image.url}}">
+                                  <img src="{{image.image.url}}" style="max-width: 250px;" class="card-img-top" alt="...">
+                            </a>
+                                {% endfor %}
+                        </div>
+                        </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-header">
+                              {{comment.customer}}
+                          </div>
+                          <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                              <p>{{comment.body}}</p>
+                              <footer class="blockquote-footer">Sana: <cite title="Source Title">{{comment.date}}</cite></footer>
+                                <footer class="blockquote-footer">
+                                    {% if comment.rating %}
+                                    Reyting: {{comment.rating}}/5
+                                    {% else %}
+                                    Reyting: 0/5
+                                    {% endif %}
+                                </footer>
+                            </blockquote>
+                          </div>
+                        </div>
+                </div>
+            </div>
+        {% if images %}
+        {% endif %}
+    </section>
+    <!-- Product Details Section End -->
+
+
+{% endblock content %}

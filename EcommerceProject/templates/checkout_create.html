@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Ogani Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'home' %}">Bosh sahifa</a>
+                            <span>Xarid qilish</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="checkout__form">
+                <h4>Xarid qilish</h4>
+                <div >
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                <h4>Buyurtmalaringiz</h4>
+                                <div class="checkout__order__products">Maxsulot <span>Umumiy narx</span></div>
+                                <ul>
+                                    {% for product in order_items %}
+                                    <li>{{product.name}} <span>{{product.total_price}} UZS</span></li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="checkout__order__total">Umumiy narx <span>{{cart_total}} USD</span>
+                                {{form.render }}
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Checkout Section End -->
+
+
+{% endblock content %}
